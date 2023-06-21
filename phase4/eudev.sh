@@ -1,4 +1,6 @@
 # Eudev Phase 4
+sed -i '/udevdir/a udev_dir=${udevdir}' src/udev/udev.pc.in
+
 ./configure --prefix=/usr           \
             --bindir=/usr/sbin      \
             --sysconfdir=/etc       \
@@ -7,8 +9,8 @@
 
 make
 
-mkdir -p /usr/lib/udev/rules.d
-mkdir -p /etc/udev/rules.d
+mkdir -pv /usr/lib/udev/rules.d
+mkdir -pv /etc/udev/rules.d
 
 if $RUN_TESTS
 then
@@ -19,7 +21,7 @@ fi
 
 make install
 
-tar -xf ../udev-lfs-20171102.tar.xz
+tar -xvf ../udev-lfs-20171102.tar.xz
 make -f udev-lfs-20171102/Makefile.lfs install
 
 udevadm hwdb --update

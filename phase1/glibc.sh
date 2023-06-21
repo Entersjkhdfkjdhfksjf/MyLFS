@@ -11,8 +11,8 @@ esac
 
 patch -Np1 -i ../$(basename $PATCH_GLIBC)
 
-mkdir build
-cd build
+mkdir -v build
+cd       build
 
 echo "rootsbindir=/usr/sbin" > configparms
 

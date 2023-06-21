@@ -108,8 +108,8 @@ function check_dependencies {
     check_dependency diff        2.8.1
     check_dependency find        4.2.31
     check_dependency gawk        4.0.1
-    check_dependency gcc         4.8 12.2.0
-    check_dependency g++         4.8 12.2.0
+    check_dependency gcc         5.1 12.2.0
+    check_dependency g++         5.1 12.2.0
     check_dependency grep        2.5.1a
     check_dependency gzip        1.3.12
     check_dependency m4          1.4.10

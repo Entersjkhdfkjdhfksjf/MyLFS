@@ -4,8 +4,8 @@
 
 FULLPATH=$(cd $(dirname $0) && pwd)
 
-export LFS_VERSION=11.2
-export KERNELVERS=5.19.2
+export LFS_VERSION=11.3
+export KERNELVERS=5.15.117
 export PACKAGE_LIST=$FULLPATH/packages.sh
 export PACKAGE_DIR=$FULLPATH/packages
 export LOG_DIR=$FULLPATH/logs
@@ -15,14 +15,14 @@ export INSTALL_MOUNT=$FULLPATH/mnt/install
 export LFS_TGT=$(uname -m)-lfs-linux-gnu
 export LFS_FS=ext4
 export LFS_IMG=$FULLPATH/lfs.img
-export LFS_IMG_SIZE=$((10*1024*1024*1024)) # 10 GiB
+export LFS_IMG_SIZE=$((40*1024*1024*1024)) # 10 GiB
 export TESTLOG_DIR=$FULLPATH/testlogs
 export LFSROOTLABEL=LFSROOT
 export LFSEFILABEL=LFSEFI
 export LFSFSTYPE=ext4
 
 # configure these like `MAKEFLAGS=-j1 RUN_TESTS=true ./mylfs.sh --build-all`
-export MAKEFLAGS=${MAKEFLAGS:--j8}
+export MAKEFLAGS=${MAKEFLAGS:--j6}
 export RUN_TESTS=${RUN_TESTS:-false}
 export ROOT_PASSWD=${ROOT_PASSWD:-password}
 export LFSHOSTNAME=${LFSHOSTNAME:-lfs}

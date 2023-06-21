@@ -9,7 +9,7 @@ make
 
 make install
 
-install -dm755 /usr/share/doc/python-3.10.6/html
+install -dm755 /usr/share/doc/python-3.11.2/html
 
 cat > /etc/pip.conf << EOF
 [global]
@@ -20,6 +20,6 @@ EOF
 tar --strip-components=1  \
     --no-same-owner       \
     --no-same-permissions \
-    -C /usr/share/doc/python-3.10.6/html \
+    -C /usr/share/doc/python-3.11.2/html \
     -xvf ../$(basename $PKG_PYTHONDOCS)
 

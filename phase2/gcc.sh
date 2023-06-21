@@ -31,10 +31,10 @@ cd build
     LDFLAGS_FOR_TARGET=-L$PWD/$LFS_TGT/libgcc      \
     --prefix=/usr                                  \
     --with-build-sysroot=$LFS                      \
-    --enable-initfini-array                        \
+    --enable-default-pie                           \
+    --enable-default-ssp                           \
     --disable-nls                                  \
     --disable-multilib                             \
-    --disable-decimal-float                        \
     --disable-libatomic                            \
     --disable-libgomp                              \
     --disable-libquadmath                          \
