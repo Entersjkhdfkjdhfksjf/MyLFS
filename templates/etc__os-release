@@ -1,5 +1,5 @@
 NAME="Linux From Scratch"
 VERSION=$LFS_VERSION
 ID=lfs
-PRETTY_NAME="Linux From Scratch LFS_VERSION"
+PRETTY_NAME="Linux From Scratch 11.3"
 VERSION_CODENAME=lfs

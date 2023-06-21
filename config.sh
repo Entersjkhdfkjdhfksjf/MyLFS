@@ -5,7 +5,7 @@
 FULLPATH=$(cd $(dirname $0) && pwd)
 
 export LFS_VERSION=11.3
-export KERNELVERS=5.15.117
+export KERNELVERS=6.1.11
 export PACKAGE_LIST=$FULLPATH/packages.sh
 export PACKAGE_DIR=$FULLPATH/packages
 export LOG_DIR=$FULLPATH/logs
@@ -15,7 +15,7 @@ export INSTALL_MOUNT=$FULLPATH/mnt/install
 export LFS_TGT=$(uname -m)-lfs-linux-gnu
 export LFS_FS=ext4
 export LFS_IMG=$FULLPATH/lfs.img
-export LFS_IMG_SIZE=$((40*1024*1024*1024)) # 10 GiB
+export LFS_IMG_SIZE=$((15*1024*1024*1024)) # 15 GiB
 export TESTLOG_DIR=$FULLPATH/testlogs
 export LFSROOTLABEL=LFSROOT
 export LFSEFILABEL=LFSEFI
