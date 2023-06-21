@@ -1,4 +1,4 @@
-patch -Np1 -i ../grub-2.06-upstream_fixes-1.patch
+patch -Np1 -i ../$(basename $PATCH_GRUB)
 
 ./configure --prefix=/usr          \
             --sysconfdir=/etc      \

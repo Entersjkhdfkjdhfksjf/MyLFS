@@ -2,7 +2,7 @@
 sed -i '/MV.*old/d' Makefile.in
 sed -i '/{OLDSUFF}/c:' support/shlib-install
 
-patch -Np1 -i ../readline-8.2-upstream_fix-1.patch
+patch -Np1 -i ../$(basename $PATCH_READLINE)
 
 ./configure --prefix=/usr    \
             --disable-static \
