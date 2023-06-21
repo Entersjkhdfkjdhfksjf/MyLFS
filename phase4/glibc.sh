@@ -1,7 +1,10 @@
 # Glibc Phase 4
 patch -Np1 -i ../$(basename $PATCH_GLIBC)
 
-mkdir build
+sed '/width -=/s/workend - string/number_length/' \
+    -i stdio-common/vfprintf-process-arg.c
+
+mkdir -v build
 cd build
 
 echo "rootsbindir=/usr/sbin" > configparms

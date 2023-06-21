@@ -21,5 +21,5 @@ fi
 
 make install
 
-mv /usr/{,s}bin/ifconfig
+mv -v /usr/{,s}bin/ifconfig
 

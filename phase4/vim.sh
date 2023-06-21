@@ -15,4 +15,9 @@ fi
 
 make install
 
-ln -sv ../vim/vim90/doc /usr/share/doc/vim-9.0.0228
+ln -sv vim /usr/bin/vi
+for L in  /usr/share/man/{,*/}man1/vim.1; do
+    ln -sv vim.1 $(dirname $L)/vi.1
+done
+
+ln -sv ../vim/vim90/doc /usr/share/doc/vim-9.0.1273

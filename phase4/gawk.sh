@@ -14,6 +14,6 @@ fi
 
 make install
 
-mkdir -p /usr/share/doc/gawk-5.1.1
-cp doc/{awkforai.txt,*.{eps,pdf,jpg}} /usr/share/doc/gawk-5.1.1
+mkdir -pv /usr/share/doc/gawk-5.2.1
+cp    -v doc/{awkforai.txt,*.{eps,pdf,jpg}} /usr/share/doc/gawk-5.2.1
 

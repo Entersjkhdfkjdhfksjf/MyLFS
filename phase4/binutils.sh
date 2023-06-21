@@ -30,5 +30,6 @@ fi
 
 make tooldir=/usr install
 
-rm -f /usr/lib/lib{bfd,ctf,ctf-nobfd,opcodes}.a
+rm -fv /usr/lib/lib{bfd,ctf,ctf-nobfd,sframe,opcodes}.a
+rm -fv /usr/share/man/man1/{gprofng,gp-*}.1
 
