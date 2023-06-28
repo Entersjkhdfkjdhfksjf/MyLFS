@@ -7,6 +7,7 @@ If you don't know what this is, or haven't built Linux From Scratch on your own 
 
 ## Which Distro has passed or failed
 Ubuntu 20.04.6 - passed
+
 EndeavourOS    - failed ( losetup: /home/user/Documents/MyLFS/lfs.img: failed to set up loop device: Device or resource busy )
 More distro will be tested whether they have passed or failed.
 
