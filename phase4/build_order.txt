@@ -74,9 +74,3 @@ sysvinit
 lfsbootscripts
 linux
 grub
-sudo
-wget
-curl
-git
-nano
-neofetch
