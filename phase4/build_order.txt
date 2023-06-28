@@ -80,5 +80,3 @@ curl
 git
 nano
 neofetch
-libtasn
-makeca
