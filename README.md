@@ -10,6 +10,8 @@ Ubuntu 20.04.6 - passed
 
 EndeavourOS Cassini Nova - failed => Reason: ( losetup: /home/user/Documents/MyLFS/lfs.img: failed to set up loop device: Device or resource busy )
 
+Arch Linux - failed => Reason: ( losetup: /home/user/Documents/MyLFS/lfs.img: failed to set up loop device: Device or resource busy init failed. )
+
 More distro will be tested whether they have passed or failed.
 
 ## How To Use
