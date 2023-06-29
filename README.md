@@ -10,6 +10,8 @@ Ubuntu 20.04.6 - passed
 
 Debian 12.0.0 - passed
 
+Gentoo 2023-06-25 - passed
+
 EndeavourOS Cassini Nova - failed => Reason: losetup: /home/user/Documents/MyLFS/lfs.img: failed to set up loop device: Device or resource busy
 
 Arch Linux - failed => Reason: losetup: /home/user/Documents/MyLFS/lfs.img: failed to set up loop device: Device or resource busy init failed.
