@@ -22,11 +22,9 @@ More distro will be tested whether they have passed or failed.
 Basically, just run `sudo ./mylfs.sh --build-all` and then stare at your terminal for several hours. Maybe meditate on life or something while you wait. Or maybe clean your room or do your dishes finally. I don't know. Do whatever you want. Maybe by the end of the script, you'll realize why you love linux so much: you love it because it is *hard*. Just like going to the moon, god dammit.
 
 ```
-$ sudo ./mylfs.sh --help
-
 Welcome to MyLFS.
 
-    WARNING: Most of the functionality in this script requires root privilages,
+    WARNING: Most of the functionality in this script requires root privileges,
 and involves the partitioning, mounting and unmounting of device files. Use at
 your own risk.
 
@@ -36,7 +34,7 @@ at a time by using the various commands outlined below. Before building anything
 however, you should be sure to run the script with '--check' to verify the
 dependencies on your system. If you want to install the IMG file that this
 script produces onto a storage device, you can specify '--install /dev/<devname>'
-on the commandline. Be careful with that last one - it WILL destroy all partitions
+on the command line. Be careful with that last one - it WILL destroy all partitions
 on the device you specify.
 
     options:
@@ -63,7 +61,7 @@ on the device you specify.
         -p|--start-phase
         -a|--start-package      Select a phase and optionally a package
                                 within that phase to start building from.
-                                These options are only available if the preceeding
+                                These options are only available if the preceding
                                 phases have been completed. They should really only
                                 be used when something broke during a build, and you
                                 don't want to start from the beginning again.
@@ -73,11 +71,14 @@ on the device you specify.
         -k|--kernel-config      Optional path to kernel config file to use during linux
                                 build.
 
-        -m|--mount
-        -u|--umount             These options will mount or unmount the disk image to the
-                                filesystem, and then exit the script immediately.
-                                You should be sure to unmount prior to running any part of
-                                the build, since the image will be automatically mounted
+        -m|--mount              Mount the disk image to the filesystem, then exit.
+                                You should ensure to unmount prior to running any part of
+                                the build, as the image will be automatically mounted
+                                and then unmounted at the end.
+
+        -u|--umount             Unmount the disk image from the filesystem, then exit.
+                                You should ensure to unmount prior to running any part of
+                                the build, as the image will be automatically mounted
                                 and then unmounted at the end.
 
         -n|--install            Specify the path to a block device on which to install the
@@ -85,6 +86,13 @@ on the device you specify.
 
         -c|--clean              This will unmount and delete the image, and clear the
                                 logs.
+
+        --chroot                Enter the chroot environment within the LFS build.
+                                This option will run the build steps inside the chroot
+                                environment, providing an isolated environment for the
+                                Linux From Scratch build process. It sets up necessary
+                                environment variables, enters the chroot, and configures
+                                the shell prompt.
 
         -h|--help               Show this message.
 ```
@@ -160,6 +168,11 @@ If you want to install the LFS IMG file onto a drive of some kind, use:
 sudo ./mylfs.sh --install /dev/<devname>
 ```
 
+To enter the chroot environment within the LFS build, use the following command:
+```sh
+sudo ./mylfs.sh --chroot
+```
+This option will run the build steps inside the chroot environment, providing an isolated environment for the Linux From Scratch build process. It sets up necessary environment variables, enters the chroot, and configures the shell prompt.
 
 Finally, to clean your workspace:
 ```sh
