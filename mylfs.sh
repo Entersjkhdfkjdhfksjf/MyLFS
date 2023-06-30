@@ -10,7 +10,7 @@ function usage {
 cat <<EOF
 Welcome to MyLFS.
 
-    WARNING: Most of the functionality in this script requires root privilages,
+    WARNING: Most of the functionality in this script requires root privileges,
 and involves the partitioning, mounting and unmounting of device files. Use at
 your own risk.
 
@@ -20,7 +20,7 @@ at a time by using the various commands outlined below. Before building anything
 however, you should be sure to run the script with '--check' to verify the
 dependencies on your system. If you want to install the IMG file that this
 script produces onto a storage device, you can specify '--install /dev/<devname>'
-on the commandline. Be careful with that last one - it WILL destroy all partitions
+on the command line. Be careful with that last one - it WILL destroy all partitions
 on the device you specify.
 
     options:
@@ -47,7 +47,7 @@ on the device you specify.
         -p|--start-phase
         -a|--start-package      Select a phase and optionally a package
                                 within that phase to start building from.
-                                These options are only available if the preceeding
+                                These options are only available if the preceding
                                 phases have been completed. They should really only
                                 be used when something broke during a build, and you
                                 don't want to start from the beginning again.
@@ -57,11 +57,14 @@ on the device you specify.
         -k|--kernel-config      Optional path to kernel config file to use during linux
                                 build.
 
-        -m|--mount
-        -u|--umount             These options will mount or unmount the disk image to the
-                                filesystem, and then exit the script immediately.
-                                You should be sure to unmount prior to running any part of
-                                the build, since the image will be automatically mounted
+        -m|--mount              Mount the disk image to the filesystem, then exit.
+                                You should ensure to unmount prior to running any part of
+                                the build, as the image will be automatically mounted
+                                and then unmounted at the end.
+
+        -u|--umount             Unmount the disk image from the filesystem, then exit.
+                                You should ensure to unmount prior to running any part of
+                                the build, as the image will be automatically mounted
                                 and then unmounted at the end.
 
         -n|--install            Specify the path to a block device on which to install the
@@ -69,6 +72,13 @@ on the device you specify.
 
         -c|--clean              This will unmount and delete the image, and clear the
                                 logs.
+
+        --chroot                Enter the chroot environment within the LFS build.
+                                This option will run the build steps inside the chroot
+                                environment, providing an isolated environment for the
+                                Linux From Scratch build process. It sets up necessary
+                                environment variables, enters the chroot, and configures
+                                the shell prompt.
 
         -h|--help               Show this message.
 EOF
@@ -834,12 +844,11 @@ function main {
     echo "build successful."
 }
 
-
 # ###############
 # Parse arguments
 # ~~~~~~~~~~~~~~~
 
-cd $(dirname $0)
+cd $(dirname "$0")
 
 # import config vars
 source ./config.sh
@@ -859,11 +868,12 @@ FOUNDSTARTPHASE=false
 MOUNT=false
 UNMOUNT=false
 CLEAN=false
+CHROOT=false
 
 while [ $# -gt 0 ]; do
   case $1 in
     -v|--version)
-      echo $LFS_VERSION
+      echo "$LFS_VERSION"
       exit
       ;;
     -V|--verbose)
@@ -931,6 +941,10 @@ while [ $# -gt 0 ]; do
       CLEAN=true
       shift
       ;;
+    --chroot)
+      CHROOT=true
+      shift
+      ;;
     -h|--help)
       usage
       exit
@@ -944,7 +958,7 @@ while [ $# -gt 0 ]; do
 done
 
 OPCOUNT=0
-for OP in BUILDALL CHECKDEPS DOWNLOAD INIT STARTPHASE MOUNT UNMOUNT INSTALL_TGT CLEAN
+for OP in BUILDALL CHECKDEPS DOWNLOAD INIT STARTPHASE MOUNT UNMOUNT INSTALL_TGT CLEAN CHROOT
 do
     OP="${!OP}"
     if [ -n "$OP" -a "$OP" != "false" ]
@@ -969,14 +983,14 @@ then
     then
         echo "ERROR: phase 5 only exists if an -x|--extend has been specified."
         exit 1
-    elif [ ! -f $LFS_IMG ]
+    elif [ ! -f "$LFS_IMG" ]
     then
         echo "ERROR: $LFS_IMG not found - cannot start from phase $STARTPHASE."
         exit 1
     fi
 fi
 
-if [ -n "$STARTPKG" -a -z "$STARTPHASE" ]
+if [ -n "$STARTPKG" ] && [ -z "$STARTPHASE" ]
 then
     echo "ERROR: -p|--start-phase must be defined if -a|--start-package is defined."
     exit 1
@@ -1002,10 +1016,38 @@ then
     fi
 
     # get full path to extension
-    EXTENSION="$(cd $(dirname $EXTENSION) && pwd)/$(basename $EXTENSION)"
+    EXTENSION="$(cd "$(dirname "$EXTENSION")" && pwd)/$(basename "$EXTENSION")"
+fi
+
+if $CHROOT
+then
+    # Run mylfs script with sudo
+    sudo ./mylfs.sh -m
+
+    # Assign the output of 'pwd' command to the LFS variable
+    # Export the LFS variable
+    export LFS=$(pwd)/mnt/lfs
+
+    # Function to run umount command after chroot exit
+    run_umount() {
+      sudo ./mylfs.sh -u
+    }
+
+    # Trap the EXIT signal and execute the run_umount function
+    trap run_umount EXIT
+
+    # Enter chroot environment
+    sudo chroot "$LFS" /usr/bin/env -i   \
+        HOME=/root                  \
+        TERM="$TERM"                \
+        PS1='(lfs chroot) \u:\w\$ ' \
+        PATH=/usr/bin:/usr/sbin     \
+        /bin/bash --login
+
 fi
 
 # ###########
 # Start build
 # ~~~~~~~~~~~
 main
+
