@@ -8,6 +8,8 @@ If you don't know what this is, or haven't built Linux From Scratch on your own 
 ## Which Distro has passed or failed
 Ubuntu 20.04.6 - passed
 
+Ubuntu 22.04.2 - failed => Reason: losetup: /home/user/Documents/MyLFS/lfs.img: failed to set up loop device: Device or resource busy
+
 Debian 12.0.0 - passed
 
 Gentoo 2023-06-25 - passed
