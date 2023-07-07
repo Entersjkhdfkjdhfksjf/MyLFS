@@ -147,6 +147,81 @@ colour() {
     fi
 }
 
+show() {
+  echo -n "Enter the folder or file name you are looking for: "
+  read -r search_name
+
+  # Use find command to search for matching folders or files
+  folder_result=$(find / -path "/run" -prune -o -type d -name "*$search_name*" -print 2>/dev/null)
+  file_result=$(find / -path "/run" -prune -o -type f -name "*$search_name*" -print 2>/dev/null)
+
+  if [ -z "$folder_result" ] && [ -z "$file_result" ]; then
+    echo "No matching folder or file found."
+  else
+    echo -n "Searching for '$search_name'"
+    while true; do
+      echo -n "."
+      sleep 0.5
+      echo -n "."
+      sleep 0.5
+      echo -n "."
+      sleep 0.5
+      break
+    done
+    echo
+
+    echo "Matching folders:"
+    if [ -z "$folder_result" ]; then
+      echo "None"
+    else
+      num_folders=$(echo "$folder_result" | wc -l)
+      echo "$num_folders folder(s) found:"
+      i=1
+      while IFS= read -r folder; do
+        echo "$i. $folder"
+        ((i++))
+      done <<< "$folder_result"
+    fi
+
+    echo "Matching files:"
+    if [ -z "$file_result" ]; then
+      echo "None"
+    else
+      num_files=$(echo "$file_result" | wc -l)
+      echo "$num_files file(s) found:"
+      i=1
+      while IFS= read -r file; do
+        echo "$i. $file"
+        ((i++))
+      done <<< "$file_result"
+    fi
+
+    while true; do
+      echo "Enter the number corresponding to the desired location (or 'q' to quit): "
+      read -r choice
+
+      if [[ $choice == q ]]; then
+        echo "Exiting."
+        break
+      elif [[ $choice =~ ^[0-9]+$ ]]; then
+        total_results=$((num_folders + num_files))
+        if ((choice >= 1 && choice <= total_results)); then
+          if ((choice <= num_folders)); then
+            selected_result=$(echo "$folder_result" | sed -n "${choice}p")
+          else
+            selected_result=$(echo "$file_result" | sed -n "$((choice - num_folders))p")
+          fi
+          cd "$(dirname "$selected_result")"
+          exec bash
+          break
+        fi
+      fi
+
+      echo "Invalid choice. Please try again."
+    done
+  fi
+}
+
 # End /etc/profile
 EOF
 
