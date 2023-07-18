@@ -2,11 +2,6 @@
 #                                      #
 #  \e[1;37mWelcome to \e[1;33mLinux From Scratch \e[1;35m11.3\e[0m  #
 #                                      #
-#  Built by Dominic Y and Jose R       #
-#                                      #
-#  Bug Report: techlm77.co.uk/bug-J-OS #
-#  Note: Bug report is in development  #
-#                                      #
 #  LFS Version: 11.3                   #
 #  Kernel Version: 6.1.11              #
 #  GNU C Library: 12.2.0               #
