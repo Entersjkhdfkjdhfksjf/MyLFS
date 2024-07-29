@@ -1,4 +1,5 @@
 # MyLFS
+[![CI](https://github.com/Entersjkhdfkjdhfksjf/MyLFS/actions/workflows/blank.yml/badge.svg)](https://github.com/Entersjkhdfkjdhfksjf/MyLFS/actions/workflows/blank.yml)
 It's a giant bash script that builds Linux From Scratch.
 
 Pronounce it in whatever way seems best to you.
